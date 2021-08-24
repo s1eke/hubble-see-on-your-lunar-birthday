@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}lunar calendar's hubble{% endblock %}
+
+{% block page_content %}
+<h1>{% if image_date and image_name and age %}这束光在{{ image_date }}抵达地球,它穿越了xx(暂不支持)光年只为了来庆祝你{{ age }}岁的生日，它来自{{ image_name }}{% endif %}</h1>
+{% if image_name %}<img src="{{ url_for('static', filename='images/%s' % image_file_name) }}" alt="{{ image_name }}" height="700" />{% else %}啥也不是{% endif %}
+{{ wtf.quick_form(form) }}
+
+{% endblock %}
