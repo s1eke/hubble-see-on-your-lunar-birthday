@@ -4,8 +4,34 @@
 {% block title %}lunar calendar's hubble{% endblock %}
 
 {% block page_content %}
-<h1>{% if parameter.file %}这束光在{{ parameter.date }}抵达地球,它穿越了xx(暂不支持)光年只为了来庆祝你{{ parameter.age }}岁的生日，它来自{{ parameter.image }}{% endif %}</h1>
-{% if parameter.image %}<img src="{{ url_for('static', filename='images/%s' % parameter.file ) }}" alt="{{ parameter.image }}" height="700" />{% else %}啥也没有{% endif %}
+<h1>{% if parameter.file %}这束光在{{ parameter.date }}抵达地球,它穿越了无数光年只为了来庆祝你{{ parameter.age }}岁的生日，它来自{{ parameter.image }}{% endif %}</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% set has_messages = messages|length > 0 %}
+  {% if parameter.image %}
+
+  <img src="{{ url_for('static', filename='images/%s' % parameter.file ) }}" alt="{{ parameter.image }}" height="700" />
+
+    {% if has_messages %}
+      <div class="flashes">
+        {% for message in messages %}
+          <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% else %}
+    {% if has_messages %}
+      <div class="flashes">
+        {% for message in messages %}
+          <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>这是孤独的一天</p>
+    {% endif %}
+  {% endif %}
+{% endwith %}
+
 {{ wtf.quick_form(form) }}
 
 {% endblock %}
